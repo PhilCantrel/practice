@@ -82,27 +82,67 @@ interface MathFunc {
 const add: MathFunc = (x: number, y: number): number => x + y
 const sub: MathFunc = (x: number, y: number): number => x - y
 
+interface PersonInterface { 
+  id: number  // read only
+  name: string
+  register(): string
+}
+
 
 // primitive & union with type
 type Point = number | string
 const p1: Point = 1
 
 // Classes
-class Person {
-  private id: number  // can only access from withing this class
-  protected nick: string  // only accessible 
+class Person implements PersonInterface {
+  id: number 
   name: string
 
-  constructor(id: number, name: string, nick: string) {
+  constructor(id: number, name: string) {
     this.id = id
     this.name = name
-    this.nick = nick
+  }
+
+  register() {
+    return `${this.name} is now registered`
   }
 
 }
 
 const brad = new Person(1, "Bradley", "Brad")
 const jase = new Person(2, "Jason", "Jase")
+
+console.log(brad.register())
+
+//Subclass
+class Employee extends Person {
+  position: string
+
+  constructor(id: number, name: string, position:string) {
+    super(id, name)
+    this.position = position
+  }
+}
+
+const emp = new Employee(3, 'Shawn', 'Developer')
+
+//Generics
+function getArray<T>(items: T[]): T[] {
+  return new Array().concat(items)
+}
+
+let numArray = getArray<number>([1,2,3,4])
+let strArray = getArray<string>(['brad', 'john', 'jace'])
+
+numArray.push('hello')
+
+
+
+
+
+
+
+
 
 
 
